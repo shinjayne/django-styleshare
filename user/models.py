@@ -44,10 +44,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 	# is_superuser - default
 	# is_active - default
 
-	# python social auth 의 backend 에 따라 이메일이 채워지기도, 이름이 채워지기도 해서 변동성이 많기 때문에 사용하지 않음
-	# python social auth 는 user model 에 username 이 없으면 에러가 나기때문에 있어야함
 	username = models.CharField(
-		verbose_name='유저 아이디',
+		verbose_name='username',
 		max_length=30,
 		unique=True,
 		null=False,
@@ -64,7 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	USERNAME_FIELD = 'username'
 
 	# 필수 입력 필드 지정
-	REQUIRED_FIELDS = ['username']
+	REQUIRED_FIELDS = []
 
 	class Meta:
 		verbose_name = 'Authentication User'

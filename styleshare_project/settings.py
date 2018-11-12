@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_filters',
 
     # created apps
+    'user',
     'goods',
 ]
 
@@ -186,9 +187,9 @@ REST_FRAMEWORK = {
         # 'rest_framework.renderers.BrowsableAPIRenderer',
     ),
 
-    # Pagenation
+    # Pagination
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 25,
+    'PAGE_SIZE': 10,
 
     # Filtering / Searching / Ordering
     # https://www.django-rest-framework.org/api-guide/filtering/#djangofilterbackend
