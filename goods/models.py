@@ -27,13 +27,16 @@ class Goods(models.Model):
 		null=False,
 		default=0,
 	)
-	shipping = models.OneToOneField(
+	shipping = models.ForeignKey(
 		verbose_name='배송정책',
 		to='goods.Shipping',
 		related_name='goods',
 		on_delete=models.PROTECT,
 		null=False,
 	)
+
+	def __str__(self):
+		return self.name
 
 
 class Option(models.Model):
@@ -43,29 +46,52 @@ class Option(models.Model):
 	goods = models.ForeignKey(
 		verbose_name='어떤 Goods 의 Option 인지',
 		to='goods.Goods',
-		related_name='options',
+		related_name='option',
 		on_delete=models.CASCADE,
 		null=True
 	)
 	color = models.CharField(
 		verbose_name='옵션 색상',
 		max_length=55,
+		choices=[
+			('yellow', '노랑'), ('blue', '파랑'), ('red', '빨강'), ('green', '초록'), ('yellowgreen', '연초록'),
+			('violet', '자주'), ('black', '검정'),
+		],
 		null=False,
 		blank=True,
-		default="",
+		default="yellow",
 	)
 	size = models.CharField(
 		verbose_name='옵션 색상',
 		max_length=55,
+		choices=[
+			('S', 'small'), ('M', 'medium'), ('L', 'large'), ('XL', 'extra large'),
+		],
 		null=False,
 		blank=True,
-		default="",
+		default="S",
 	)
 	stock = models.PositiveIntegerField(
 		verbose_name='옵션 재고 수량',
 		null=False,
 		default=0,
 	)
+
+	def save(self, *args, **kwargs):
+
+		# Data Integrity
+		# 중복된 정보는 저장 불가능하다
+		if Option.objects.filter(goods=self.goods, color=self.color, size=self.size).count() > 0:
+			return
+
+		# 저장한다.
+		super().save(*args, **kwargs)
+
+	def __str__(self):
+		if not self.goods:
+			return "No Goods Assigned"
+		else:
+			return "[" + self.goods.name + "]" + self.color + "|" + self.size
 
 
 class Provider(models.Model):
@@ -79,6 +105,9 @@ class Provider(models.Model):
 		blank=True,
 		default="",
 	)
+
+	def __str__(self):
+		return self.name
 
 
 class Shipping(models.Model):
@@ -109,5 +138,14 @@ class Shipping(models.Model):
 		if self.method == "FREE":
 			self.price = 0
 
+		# Data Integrity
+		# 중복된 정보는 저장 불가능하다
+		if Shipping.objects.filter(method=self.method, price=self.price, can_bundle=self.can_bundle).count() > 0:
+			return
+
 		# 저장한다.
 		super().save(*args, **kwargs)
+
+	def __str__(self):
+		can_bundle_kr = '묶음 가능' if self.can_bundle else '묶음 불가'
+		return self.method + '|' + str(self.price ) + '|' + can_bundle_kr
