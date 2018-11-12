@@ -12,7 +12,7 @@ router = DefaultRouter()
 # router.register(r'profile', views.ProfileViewSet)
 
 urlpatterns = [
-	# url(r'^user/$', views.UserListCreate.as_view()),
-	# url(r'^user/(?P<pk>[0-9]+)/$', views.UserRUD.as_view(), name='user-detail'),
+	re_path(r'^goods/$', views.GoodsListAPI.as_view()),
+	re_path(r'^goods/(?P<pk>[0-9]+)/$', views.GoodsRetrieveAPI.as_view()),
 	re_path(r'^', include(router.urls)),
 ]
