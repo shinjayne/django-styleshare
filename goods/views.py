@@ -23,6 +23,9 @@ class GoodsListAPI(generics.ListAPIView):
 	serializer_class = GoodsListSerializer
 	permission_classes = [AllowAny]
 
+	# django-filter
+	# https://www.django-rest-framework.org/api-guide/filtering/#djangofilterbackend
+	search_fields = ('name', 'provider__name',)
 
 class GoodsRetrieveAPI(generics.RetrieveAPIView):
 	"""
