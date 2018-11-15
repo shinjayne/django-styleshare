@@ -93,28 +93,28 @@ WSGI_APPLICATION = 'styleshare_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'django-styleshare',
-#         'USER': 'root',
-#         'PASSWORD': 'stylesharejcurve',
-#         'HOST': 'database',
-#         'PORT': 3306,
-#     }
-# }
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django-styleshare',
-        'USER': os.environ['DB_USERNAME'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST':  os.environ['DB_HOST'],   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': 'stylesharejcurve',
+        'HOST': 'database',
+        'PORT': 3306,
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'django-styleshare',
+#         'USER': os.environ['DB_USERNAME'],
+#         'PASSWORD': os.environ['DB_PASSWORD'],
+#         'HOST':  os.environ['DB_HOST'],   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
